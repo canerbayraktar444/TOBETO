@@ -1,12 +1,10 @@
 <?php
 // Oyun tahtasını başlatma
-$boardSize = 5;
-$board = array_fill(0, $boardSize, array_fill(0, $boardSize, ' '));
-$ships = 3;
-$playerHits = 0;
-$computerHits = 0;
+function initializeBoard($boardSize) {
+    return array_fill(0, $boardSize, array_fill(0, $boardSize, ' '));
+}
 
-// Rastgele gemi yerleştirici
+// Gemi yerleştirme
 function placeShips(&$board, $ships) {
     $size = count($board);
     for ($i = 0; $i < $ships; $i++) {
@@ -49,13 +47,13 @@ function shoot(&$board, $x, $y) {
 
 // Oyun döngüsü
 function playGame($boardSize, $ships) {
-    global $playerHits, $computerHits;
-    $playerBoard = array_fill(0, $boardSize, array_fill(0, $boardSize, ' '));
-    $computerBoard = array_fill(0, $boardSize, array_fill(0, $boardSize, ' '));
-
+    $playerBoard = initializeBoard($boardSize);
+    $computerBoard = initializeBoard($boardSize);
     placeShips($playerBoard, $ships);
     placeShips($computerBoard, $ships);
 
+    $playerHits = 0;
+    $computerHits = 0;
     while ($playerHits < $ships && $computerHits < $ships) {
         echo "Bilgisayarın tahtası:\n";
         printBoard($computerBoard);
@@ -99,5 +97,8 @@ function playGame($boardSize, $ships) {
     }
 }
 
+// Oyun başlatma
+$boardSize = 5;
+$ships = 3;
 playGame($boardSize, $ships);
 ?>
